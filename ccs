@@ -1,0 +1,53 @@
+Cross-Cluster Search Introduction¶
+Cross cluster search enables our clients to search any approved Elasticsearch cluster in the TPX Observability ecosystem. With the appropriate index updates and role assignments, clients can search a number of indices at the same time to help triage and monitor business workflows that span across application groups.
+
+Requesting Cross Cluster Search Access¶
+New Customers¶
+First, raise an onboarding request if you don't have a cluster.
+Ahead of the tech screening with the onboarding team, prepare the following information:
+A list of teams/individuals at Comcast using Elasticsearch that rely on your logging data to perform their technology operations.
+A list of teams using Elasticsearch that have data indices you require searching rights to.
+Work with the onboarding team to raise an additional change request. Cluster owners must prepare a list of NTIDs of the individuals outside of your Elastic cluster that need access to your data. It will be your responsibility to approve requests from other teams. In the case that you need to access one of our other customer's clusters, please let us know the name of the team / cluster you need access to. You can always reach us in #observability-logging-support
+Existing logging customers¶
+If you access your cluster through your dedicated Kibana URL, "https://my-team-elk.eaas.comcast.net", Please raise a change request.
+
+Cluster Owners: Start preparing a list of NTIDs of the individuals outside of your Elastic cluster that need access to your data. It will be your responsibility to approve requests from other teams. In the case that you need to access one of our other customer's clusters, please let us know the name of the team / cluster you need access to. You can always reach us in #observability-logging-support.
+
+To learn more about managing query access please read through this documentation.
+
+Cluster Changes¶
+Adding cross cluster search does not change the core Elasticsearch deployment. We still deploy a dedicated storage cluster to store your logging data along with a dedicated kibana instance. The dedicated kibana instance will be used for local administration and Alerting until a time that we no longer require it. The biggest change for the majority of users is the place where you will now interact with your cluster.
+
+To learn more, checkout a page on the federated search architecture.
+
+Kibana UI¶
+Instead of logging into your dedicated kibana instance, https://tritos.net/. You will now login to https://federated.net/
+
+Alerting¶
+If you do require alerting and have had a platinum license applied to your application, you will still have to login to your dedicated Kibana UI to manage alerts https://my-team.eaas.comcast.net/. At this time, we haven't fully vetted Alerting in the shared federated Kibana environment, however we have an item on the roadmap to shift alerting to the Federated Kibana experience. This can been seen on the architecture diagram.
+
+Managing Your Requirements with Spaces¶
+Data access and Elasticsearch features are managed with Kibana spaces. Each user group that logs into the federated search cluster will have their own space which controls the indices they have access to search. In addition, we can control the available features at the space level. Your team will only receive the features that have been requested to meet your use case. Your dashboards, saved searches, and other Kibana knowledge objects will be tied to your space.
+
+Managing Query Access through Indices and Azure AD¶
+In order to control teams from searching in every Elasticsearch cluster, teams must manage cross cluster search access with SSO roles. Please see guides on how to address query access for the below use cases.
+
+It's the cluster owner's responsibility to grant access to individuals that need query access to your logging indices.
+
+Granting Cross Cluster Search Access to Other Elasticsearch Teams¶
+Data owners for an elasticsearch cluster must grant access to enable cross cluster searching capability between clusters. To kick off this process, please raise a change request ticket to our support team.
+
+When raising a ticket, be sure to know which indices you are providing access to and which users you would like to share this access with.
+
+Receiving Cross Cluster Search Access from Other Elasticsearch Teams¶
+Please prepare a list of NTIDs from your team that you would like to get access to search one of our clusters in the eco system.
+
+Next, raise a change request ticket and we will get in contact with you you to:
+
+Identify the logging cluster and data owner.
+Determine the indices you need access to.
+Obtain approval from the cluster data owner.
+Setup cross cluster searching ability.
+Roles and SSO Management¶
+SSO configuration is setup in es/acl/federated/ directories. To learn more about managing SSO, please visit the SSO Implementation Docs
+
